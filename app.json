@@ -32,6 +32,15 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/AvenirNextCyr-Demi.ttf",
+            "./assets/fonts/AvenirNextCyr-Medium.ttf"
+          ]
+        }
       ]
     ],
     "experiments": {
