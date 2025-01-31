@@ -37,6 +37,10 @@ const words = [
 ];
 
 export const History: React.FC = () => {
+  if (words.length === 0) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>

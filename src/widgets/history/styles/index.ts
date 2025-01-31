@@ -4,7 +4,6 @@ export const styles = StyleSheet.create({
   container: {
     gap: 16,
     paddingLeft: 10,
-    marginTop: 20,
     marginBottom: 20,
   },
   header: {
