@@ -2,6 +2,8 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
+    maxWidth: 120,
+    height: 50,
     paddingTop: 8,
     paddingBottom: 8,
     paddingLeft: 12,
@@ -15,7 +17,7 @@ export const styles = StyleSheet.create({
   key: {
     fontWeight: 700,
     fontSize: 12,
-    lineHeight: 18,
+    lineHeight: 16,
     letterSpacing: 1,
     color: "#F2ECE7",
   },

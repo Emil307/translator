@@ -15,8 +15,12 @@ interface WordCardProps {
 export const WordCard: React.FC<WordCardProps> = ({ word }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.key}>{word.result}</Text>
-      <Text style={styles.value}>{word.initial}</Text>
+      <Text style={styles.key} numberOfLines={1} ellipsizeMode="tail">
+        {word.result}
+      </Text>
+      <Text style={styles.value} numberOfLines={1} ellipsizeMode="tail">
+        {word.initial}
+      </Text>
     </View>
   );
 };

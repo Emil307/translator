@@ -11,8 +11,10 @@ const words = [
   },
   {
     id: 2,
-    initial: "Вкусный",
-    result: "Tasty",
+    initial:
+      "Длинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текст",
+    result:
+      "LongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongText",
   },
   {
     id: 3,
