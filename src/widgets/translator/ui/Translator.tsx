@@ -24,6 +24,16 @@ export const Translator: React.FC = () => {
             defaultValue={initialText}
             onChangeText={(text) => setInitialText(text)}
           />
+          <View style={styles.buttons}>
+            <Image
+              style={styles.copyImage}
+              source={require("@/assets/images/copy.png")}
+            />
+            <Image
+              style={styles.recordImage}
+              source={require("@/assets/images/record.png")}
+            />
+          </View>
         </View>
       </View>
     </View>

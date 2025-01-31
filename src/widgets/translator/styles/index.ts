@@ -16,6 +16,7 @@ export const styles = StyleSheet.create({
     borderColor: "rgba(242, 236, 231, .2)",
     borderStyle: "solid",
     backgroundColor: "rgba(242, 236, 231, .1)",
+    boxShadow: "inset 0 0 5 rgba(255, 255, 255, .25)",
   },
   header: {
     flexDirection: "row",
@@ -44,6 +45,8 @@ export const styles = StyleSheet.create({
     height: 20,
   },
   content: {
+    flexDirection: "row",
+    flex: 1,
     padding: 12,
   },
   input: {
@@ -52,5 +55,19 @@ export const styles = StyleSheet.create({
     fontWeight: 500,
     letterSpacing: 1,
     color: "#F2ECE7",
+    flex: 1,
+  },
+  buttons: {
+    width: 32,
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+  },
+  copyImage: {
+    width: 24,
+    height: 24,
+  },
+  recordImage: {
+    width: 32,
+    height: 32,
   },
 });
