@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Image, ScrollView } from "react-native";
 import { styles } from "../styles";
-import { WordCard } from "@/src/entities/history";
+import { WordCard } from "@/src/entities/translator";
 
 const words = [
   {
