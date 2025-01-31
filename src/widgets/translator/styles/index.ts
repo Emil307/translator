@@ -70,4 +70,12 @@ export const styles = StyleSheet.create({
     width: 32,
     height: 32,
   },
+  recordingButton: {
+    width: 32,
+    height: 32,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 16,
+    boxShadow: "inset 0 0 5 rgba(255, 255, 255, .25)",
+  },
 });

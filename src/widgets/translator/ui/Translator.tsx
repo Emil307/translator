@@ -5,6 +5,7 @@ import * as Clipboard from "expo-clipboard";
 
 export const Translator: React.FC = () => {
   const [initialText, setInitialText] = useState("");
+  const [isRecording, setIsRecording] = useState(false);
 
   return (
     <View style={styles.screen}>
@@ -34,10 +35,20 @@ export const Translator: React.FC = () => {
                 source={require("@/assets/images/copy.png")}
               />
             </TouchableOpacity>
-            <Image
-              style={styles.recordImage}
-              source={require("@/assets/images/record.png")}
-            />
+            {!isRecording && (
+              <TouchableOpacity onPress={() => setIsRecording(true)}>
+                <Image
+                  style={styles.recordImage}
+                  source={require("@/assets/images/record.png")}
+                />
+              </TouchableOpacity>
+            )}
+            {isRecording && (
+              <TouchableOpacity
+                onPress={() => setIsRecording(false)}
+                style={styles.recordingButton}
+              ></TouchableOpacity>
+            )}
           </View>
         </View>
       </View>
