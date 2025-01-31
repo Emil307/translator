@@ -1,15 +1,21 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+  screen: {
+    paddingTop: 20,
+    width: "100%",
+    paddingLeft: 10,
+    paddingRight: 10,
+    flex: 1,
+  },
   container: {
     width: "100%",
+    height: "100%",
     borderRadius: 20,
     borderWidth: 1,
     borderColor: "rgba(242, 236, 231, .2)",
     borderStyle: "solid",
     backgroundColor: "rgba(242, 236, 231, .1)",
-    marginTop: 20,
-    flex: 1,
   },
   header: {
     flexDirection: "row",
