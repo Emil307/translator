@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { styles } from "../styles";
-import { View, Image, Text, TextInput } from "react-native";
+import { View, Image, Text, TextInput, TouchableOpacity } from "react-native";
+import * as Clipboard from "expo-clipboard";
 
 export const Translator: React.FC = () => {
   const [initialText, setInitialText] = useState("");
@@ -25,10 +26,14 @@ export const Translator: React.FC = () => {
             onChangeText={(text) => setInitialText(text)}
           />
           <View style={styles.buttons}>
-            <Image
-              style={styles.copyImage}
-              source={require("@/assets/images/copy.png")}
-            />
+            <TouchableOpacity
+              onPress={() => Clipboard.setStringAsync(initialText)}
+            >
+              <Image
+                style={styles.copyImage}
+                source={require("@/assets/images/copy.png")}
+              />
+            </TouchableOpacity>
             <Image
               style={styles.recordImage}
               source={require("@/assets/images/record.png")}
