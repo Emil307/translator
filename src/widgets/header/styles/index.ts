@@ -13,6 +13,6 @@ export const styles = StyleSheet.create({
     lineHeight: 16,
     letterSpacing: 1,
     textTransform: "uppercase",
-    color: "#fff",
+    color: "#F2ECE7",
   },
 });

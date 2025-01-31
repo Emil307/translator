@@ -17,13 +17,13 @@ export const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 18,
     letterSpacing: 1,
-    color: "#fff",
+    color: "#F2ECE7",
   },
   value: {
     fontWeight: 500,
     fontSize: 12,
     lineHeight: 18,
     letterSpacing: 1,
-    color: "#fff",
+    color: "#F2ECE7",
   },
 });

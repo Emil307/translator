@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { styles } from "../styles";
-import { View, Image, Text } from "react-native";
+import { View, Image, Text, TextInput } from "react-native";
 
 export const Translator: React.FC = () => {
+  const [initialText, setInitialText] = useState("");
+
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
@@ -14,7 +16,15 @@ export const Translator: React.FC = () => {
           />
           <Text style={styles.language}>английский</Text>
         </View>
-        <Text>Translator</Text>
+        <View style={styles.content}>
+          <TextInput
+            style={styles.input}
+            placeholder="Начните писать текст"
+            multiline
+            defaultValue={initialText}
+            onChangeText={(text) => setInitialText(text)}
+          />
+        </View>
       </View>
     </View>
   );

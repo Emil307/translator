@@ -37,10 +37,20 @@ export const styles = StyleSheet.create({
     lineHeight: 18,
     letterSpacing: 1,
     textTransform: "uppercase",
-    color: "#fff",
+    color: "#F2ECE7",
   },
   arrow: {
     width: 20,
     height: 20,
+  },
+  content: {
+    padding: 12,
+  },
+  input: {
+    fontSize: 20,
+    lineHeight: 22,
+    fontWeight: 500,
+    letterSpacing: 1,
+    color: "#F2ECE7",
   },
 });

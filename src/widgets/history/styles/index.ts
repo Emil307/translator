@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     lineHeight: 18,
     letterSpacing: 1,
     textTransform: "uppercase",
-    color: "#fff",
+    color: "#F2ECE7",
   },
   arrow: {
     width: 20,
