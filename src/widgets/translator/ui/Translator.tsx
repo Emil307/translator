@@ -6,6 +6,7 @@ import { useRecording } from "@/src/features/translator";
 import { useDebounce } from "@/src/shared";
 import { translate } from "@/src/entities/translator/api";
 import { language, TranslateRequestDto } from "@/src/entities/translator";
+import { Translation } from "@/src/features/translator";
 
 export const Translator: React.FC = () => {
   const [initialText, setInitialText] = useState("");
@@ -50,38 +51,46 @@ export const Translator: React.FC = () => {
           />
           <Text style={styles.language}>английский</Text>
         </View>
-        <View style={styles.content}>
-          <TextInput
-            style={styles.input}
-            placeholder="Начните писать текст"
-            multiline
-            defaultValue={initialText}
-            onChangeText={(text) => setInitialText(text)}
-          />
-          <View style={styles.buttons}>
-            <TouchableOpacity
-              onPress={() => Clipboard.setStringAsync(initialText)}
-            >
-              <Image
-                style={styles.copyImage}
-                source={require("@/assets/images/copy.png")}
+        <View style={styles.wrapper}>
+          <View style={styles.initial}>
+            <View style={styles.top}>
+              <TextInput
+                style={styles.input}
+                placeholder="Начните писать текст"
+                multiline
+                defaultValue={initialText}
+                onChangeText={(text) => setInitialText(text)}
               />
-            </TouchableOpacity>
-            {!isRecording && (
-              <TouchableOpacity onPress={startRecording}>
+              <TouchableOpacity
+                onPress={() => Clipboard.setStringAsync(initialText)}
+              >
                 <Image
-                  style={styles.recordImage}
-                  source={require("@/assets/images/record.png")}
+                  style={styles.copyImage}
+                  source={require("@/assets/images/copy.png")}
                 />
               </TouchableOpacity>
-            )}
-            {isRecording && (
-              <TouchableOpacity
-                onPress={stopRecording}
-                style={styles.recordingButton}
-              ></TouchableOpacity>
-            )}
+            </View>
+            <View style={styles.bottom}>
+              {!isRecording && (
+                <TouchableOpacity onPress={startRecording}>
+                  <Image
+                    style={styles.recordImage}
+                    source={require("@/assets/images/record.png")}
+                  />
+                </TouchableOpacity>
+              )}
+              {isRecording && (
+                <TouchableOpacity
+                  onPress={stopRecording}
+                  style={styles.recordingButton}
+                ></TouchableOpacity>
+              )}
+            </View>
           </View>
+          {translatedText && !isTranslating && (
+            <Translation translation={translatedText} language={language.EN} />
+          )}
+          {isTranslating && <Text>Загрузка...</Text>}
         </View>
       </View>
     </View>

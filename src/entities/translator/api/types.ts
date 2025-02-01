@@ -1,7 +1,4 @@
-export enum language {
-  RU = "ru",
-  EN = "en",
-}
+import { language } from "../types";
 
 type TAlternative = {
   words: string[];

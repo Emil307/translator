@@ -45,18 +45,27 @@ export const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
-  content: {
-    flexDirection: "row",
+  wrapper: {
     flex: 1,
+  },
+  initial: {
+    gap: 20,
     padding: 12,
   },
+  top: {
+    flexDirection: "row",
+  },
+  bottom: {
+    flexDirection: "row-reverse",
+    justifyContent: "space-between",
+  },
   input: {
+    flex: 1,
     fontSize: 20,
     lineHeight: 22,
     fontWeight: 500,
     letterSpacing: 1,
     color: "#F2ECE7",
-    flex: 1,
   },
   buttons: {
     width: 32,
