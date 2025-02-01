@@ -5,7 +5,7 @@ import * as Clipboard from "expo-clipboard";
 import { useRecording } from "@/src/features/translator";
 import { useDebounce } from "@/src/shared";
 import { translate } from "@/src/entities/translator/api";
-import { TranslateRequestDto } from "@/src/entities/translator/api/types";
+import { language, TranslateRequestDto } from "@/src/entities/translator";
 
 export const Translator: React.FC = () => {
   const [initialText, setInitialText] = useState("");
@@ -21,8 +21,8 @@ export const Translator: React.FC = () => {
       setIsTranslating(true);
 
       const translateRequest: TranslateRequestDto = {
-        source_lang: "russian",
-        target_lang: "english",
+        source_lang: language.RU,
+        target_lang: language.EN,
         text: initialText,
       };
 

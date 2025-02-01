@@ -1,3 +1,8 @@
+export enum language {
+  RU = "ru",
+  EN = "en",
+}
+
 type TAlternative = {
   words: string[];
   translation: string;
@@ -9,8 +14,8 @@ type TExample = {
 };
 
 export interface TranslateRequestDto {
-  source_lang: string;
-  target_lang: string;
+  source_lang: language;
+  target_lang: language;
   text: string;
 }
 
