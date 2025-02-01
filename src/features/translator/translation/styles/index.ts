@@ -10,9 +10,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "rgba(242, 236, 231, .2)",
   },
   text: {
-    fontSize: 20,
     fontWeight: 500,
-    lineHeight: 22,
     letterSpacing: 1,
     color: "#F2ECE7",
   },

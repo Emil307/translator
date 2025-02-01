@@ -55,7 +55,11 @@ export const Translator: React.FC = () => {
           <View style={styles.initial}>
             <View style={styles.top}>
               <TextInput
-                style={styles.input}
+                style={{
+                  ...styles.input,
+                  fontSize: initialText.length > 150 ? 16 : 20,
+                  lineHeight: initialText.length > 150 ? 18 : 22,
+                }}
                 placeholder="Начните писать текст"
                 multiline
                 defaultValue={initialText}

@@ -61,8 +61,6 @@ export const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    fontSize: 20,
-    lineHeight: 22,
     fontWeight: 500,
     letterSpacing: 1,
     color: "#F2ECE7",

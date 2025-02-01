@@ -15,7 +15,15 @@ export const Translation: React.FC<TranslationProps> = ({
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.text}>{translation}</Text>
+        <Text
+          style={{
+            ...styles.text,
+            fontSize: translation.length > 150 ? 16 : 20,
+            lineHeight: translation.length > 150 ? 18 : 22,
+          }}
+        >
+          {translation}
+        </Text>
       </View>
       {/* <View>
         <TouchableOpacity onPress={() => speakText(translation, language)}>
