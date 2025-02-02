@@ -1,7 +1,7 @@
 import React from "react";
 import { Tabs } from "expo-router";
 
-export function TabsLayout() {
+export function AuthLayout() {
   return (
     <Tabs
       screenOptions={{
@@ -11,13 +11,7 @@ export function TabsLayout() {
       }}
     >
       <Tabs.Screen
-        name="(auth)"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Tabs.Screen
-        name="(translator)"
+        name="(signin)"
         options={{
           headerShown: false,
         }}
