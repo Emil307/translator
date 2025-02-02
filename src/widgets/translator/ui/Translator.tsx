@@ -18,7 +18,7 @@ export const Translator: React.FC = () => {
   const debouncedInitialText = useDebounce(initialText, 500);
 
   useEffect(() => {
-    if (typeof debouncedInitialText === "string") {
+    if (debouncedInitialText) {
       setIsTranslating(true);
 
       const translateRequest: TranslateRequestDto = {
