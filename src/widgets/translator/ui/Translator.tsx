@@ -80,7 +80,6 @@ export const Translator: React.FC = () => {
           setTranslationLanguage={setTranslationLanguage}
           handleTranslate={handleTranslate}
         />
-
         <View style={styles.wrapper}>
           <View style={styles.initial}>
             <View style={styles.top}>
@@ -90,7 +89,7 @@ export const Translator: React.FC = () => {
                   fontSize: String(initialText).length > 150 ? 16 : 20,
                   lineHeight: String(initialText).length > 150 ? 18 : 22,
                 }}
-                placeholder="Начните писать текст"
+                placeholder={isRecording ? "Говорите" : "Начните писать текст"}
                 multiline
                 defaultValue={initialText}
                 onChangeText={(text) => handleInputText(text)}
