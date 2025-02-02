@@ -2,68 +2,98 @@ import React, { useEffect, useState } from "react";
 import { styles } from "../styles";
 import { View, Image, Text, TextInput, TouchableOpacity } from "react-native";
 import * as Clipboard from "expo-clipboard";
-import { useRecording } from "@/src/features/translator";
-import { useDebounce } from "@/src/shared";
-import { translate } from "@/src/entities/translator/api";
+import {
+  ChangeLanguage,
+  useRecording,
+  useTranslation,
+} from "@/src/features/translator";
+import { $api, useDebounce } from "@/src/shared";
 import { language, TranslateRequestDto } from "@/src/entities/translator";
 import { Translation } from "@/src/features/translator";
+import axios, { CancelTokenSource } from "axios";
 
 export const Translator: React.FC = () => {
-  const [initialText, setInitialText] = useState("");
-  const [translatedText, setTranslatedText] = useState("");
-  const [isTranslating, setIsTranslating] = useState(false);
+  const [initialLanguage, setInitialLanguage] = useState<language>(language.RU);
+  const [translationLanguage, setTranslationLanguage] = useState<language>(
+    language.EN
+  );
+  const {
+    initialText,
+    translatedText,
+    isTranslating,
+    setInitialText,
+    setTranslatedText,
+    setIsTranslating,
+    handleTranslate,
+  } = useTranslation();
   const { isRecording, audioUri, startRecording, stopRecording } =
     useRecording();
+
+  const [cancelToken, setCancelToken] = useState<CancelTokenSource | null>(
+    null
+  );
 
   const debouncedInitialText = useDebounce(initialText, 500);
 
   useEffect(() => {
-    if (debouncedInitialText) {
+    if (!debouncedInitialText) {
+      setInitialText("");
+      setTranslatedText("");
+      return;
+    }
+    if (typeof debouncedInitialText === "string") {
       setIsTranslating(true);
 
+      const source = axios.CancelToken.source();
+      setCancelToken(source);
+
       const translateRequest: TranslateRequestDto = {
-        source_lang: language.RU,
-        target_lang: language.EN,
-        text: initialText,
+        source_lang: initialLanguage,
+        target_lang: translationLanguage,
+        text: debouncedInitialText,
       };
 
-      translate(translateRequest)
-        .then((res) => {
-          setTranslatedText(res.data.translation);
-        })
-        .catch((e) => {
-          alert(e);
-        })
-        .finally(() => {
-          setIsTranslating(false);
-        });
+      handleTranslate(translateRequest, source);
     }
   }, [debouncedInitialText]);
+
+  const cancelRequests = () => {
+    if (cancelToken) {
+      cancelToken.cancel("Операция отменена");
+    }
+  };
+
+  function handleInputText(text: string) {
+    setInitialText(text);
+    cancelRequests();
+  }
 
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.language}>русский</Text>
-          <Image
-            style={styles.arrow}
-            source={require("@/assets/images/translator-arrow.png")}
-          />
-          <Text style={styles.language}>английский</Text>
-        </View>
+        <ChangeLanguage
+          initialLanguage={initialLanguage}
+          translationLanguage={translationLanguage}
+          textToTranslate={translatedText}
+          cancelToken={cancelToken as any}
+          setInitialLanguage={setInitialLanguage}
+          setTranslationLanguage={setTranslationLanguage}
+          handleTranslate={handleTranslate}
+        />
+
         <View style={styles.wrapper}>
           <View style={styles.initial}>
             <View style={styles.top}>
               <TextInput
                 style={{
                   ...styles.input,
-                  fontSize: initialText.length > 150 ? 16 : 20,
-                  lineHeight: initialText.length > 150 ? 18 : 22,
+                  fontSize: String(initialText).length > 150 ? 16 : 20,
+                  lineHeight: String(initialText).length > 150 ? 18 : 22,
                 }}
                 placeholder="Начните писать текст"
                 multiline
                 defaultValue={initialText}
-                onChangeText={(text) => setInitialText(text)}
+                onChangeText={(text) => handleInputText(text)}
               />
               <TouchableOpacity
                 onPress={() => Clipboard.setStringAsync(initialText)}
@@ -91,7 +121,7 @@ export const Translator: React.FC = () => {
               )}
             </View>
           </View>
-          {translatedText && !isTranslating && (
+          {translatedText && (
             <Translation translation={translatedText} language={language.EN} />
           )}
           {isTranslating && <Text>Загрузка...</Text>}

@@ -17,8 +17,15 @@ export interface TranslateRequestDto {
 }
 
 export interface TranslateResponseDto {
+  initial: string;
   translation: string;
+}
+
+export interface AlternativesResponseDto {
   pof: string;
   alternatives: TAlternative[];
+}
+
+export interface ExamplesResponseDto {
   examples: TExample[];
 }
