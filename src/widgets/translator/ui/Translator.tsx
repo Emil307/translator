@@ -7,7 +7,7 @@ import {
   useRecording,
   useTranslation,
 } from "@/src/features/translator";
-import { $api, useDebounce } from "@/src/shared";
+import { useDebounce } from "@/src/shared";
 import { language, TranslateRequestDto } from "@/src/entities/translator";
 import { Translation } from "@/src/features/translator";
 import axios, { CancelTokenSource } from "axios";
