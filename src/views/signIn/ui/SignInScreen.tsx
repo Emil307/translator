@@ -1,10 +1,5 @@
-import { View, Text, TextInput } from "react-native";
+import { SignInForm } from "@/src/widgets/SignInForm";
 
 export default function SignInScreen() {
-  return (
-    <View>
-      <Text style={{ color: "#fff" }}>Sign in</Text>
-      <TextInput placeholder={"Начните писать текст"} />
-    </View>
-  );
+  return <SignInForm />;
 }
