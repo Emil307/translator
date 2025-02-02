@@ -11,7 +11,6 @@ import { useDebounce } from "@/src/shared";
 import { language, TranslateRequestDto } from "@/src/entities/translator";
 import { Translation } from "@/src/features/translator";
 import axios, { CancelTokenSource } from "axios";
-import { Redirect, useRouter } from "expo-router";
 
 export const Translator: React.FC = () => {
   const [initialLanguage, setInitialLanguage] = useState<language>(language.RU);
@@ -35,8 +34,6 @@ export const Translator: React.FC = () => {
   );
 
   const debouncedInitialText = useDebounce(initialText, 500);
-
-  const router = useRouter();
 
   useEffect(() => {
     if (!debouncedInitialText) {
@@ -73,7 +70,6 @@ export const Translator: React.FC = () => {
 
   return (
     <View style={styles.screen}>
-      <Redirect href={"/auth/signin"} />
       <View style={styles.container}>
         <ChangeLanguage
           initialLanguage={initialLanguage}
