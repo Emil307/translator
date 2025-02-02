@@ -1,11 +1,10 @@
-import { Keyboard, TouchableWithoutFeedback, View, Text } from "react-native";
+import { View, Text, TextInput } from "react-native";
 
 export default function SignInScreen() {
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View>
-        <Text>Sign in</Text>
-      </View>
-    </TouchableWithoutFeedback>
+    <View>
+      <Text style={{ color: "#fff" }}>Sign in</Text>
+      <TextInput placeholder={"Начните писать текст"} />
+    </View>
   );
 }
