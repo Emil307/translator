@@ -1,14 +1,5 @@
-import { Stack } from "expo-router";
+import { Slot } from "expo-router";
 
 export function SignInLayout() {
-  return (
-    <Stack>
-      <Stack.Screen
-        name="index"
-        options={{
-          headerShown: false,
-        }}
-      />
-    </Stack>
-  );
+  return <Slot />;
 }
