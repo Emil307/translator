@@ -4,13 +4,13 @@ export function RootLayout() {
   return (
     <Stack>
       <Stack.Screen
-        name="(tabs)"
+        name="auth"
         options={{
           headerShown: false,
         }}
       />
       <Stack.Screen
-        name="auth"
+        name="(tabs)"
         options={{
           headerShown: false,
         }}
