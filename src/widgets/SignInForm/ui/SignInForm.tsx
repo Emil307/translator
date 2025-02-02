@@ -13,7 +13,7 @@ export const SignInForm: React.FC = () => {
           onPress={() => router.push("/(tabs)/(translator)")}
           style={styles.signUp}
         >
-          <Text>Зарегистрироваться</Text>
+          <Text style={{ color: "#fff" }}>Зарегистрироваться</Text>
         </TouchableOpacity>
       </View>
     </View>
