@@ -11,12 +11,6 @@ export function TabsLayout() {
       }}
     >
       <Tabs.Screen
-        name="(auth)"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Tabs.Screen
         name="(translator)"
         options={{
           headerShown: false,
