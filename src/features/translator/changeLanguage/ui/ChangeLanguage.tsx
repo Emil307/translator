@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { styles } from "../styles";
-import { language, TranslateRequestDto } from "@/src/entities/translator";
+import {
+  language,
+  TFrom,
+  TranslateRequestDto,
+} from "@/src/entities/translator";
 import { CancelTokenSource } from "axios";
 
 interface ChangeLanguageProps {
@@ -16,6 +20,8 @@ interface ChangeLanguageProps {
   ) => void;
   textToTranslate: string;
   cancelToken: CancelTokenSource;
+  from: TFrom;
+  setFrom: (from: TFrom) => void;
 }
 
 export const ChangeLanguage: React.FC<ChangeLanguageProps> = ({
@@ -23,12 +29,17 @@ export const ChangeLanguage: React.FC<ChangeLanguageProps> = ({
   textToTranslate,
   translationLanguage,
   cancelToken,
+  from,
   setInitialLanguage,
   setTranslationLanguage,
   setInitialText,
   handleTranslate,
+  setFrom,
 }) => {
   function handleChangeLanguage() {
+    if (from !== "input") {
+      setFrom("input");
+    }
     setInitialText(textToTranslate);
 
     const initialLanguageCached = initialLanguage;

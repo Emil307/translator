@@ -13,11 +13,13 @@ export default function TranslatorScreen() {
     translatedText,
     isTranslating,
     history,
+    from,
     setInitialText,
     setTranslatedText,
     setIsTranslating,
     handleTranslate,
     handleGetHistory,
+    setFrom,
   } = useTranslation();
 
   return (
@@ -33,12 +35,21 @@ export default function TranslatorScreen() {
           initialText={initialText}
           translatedText={translatedText}
           isTranslating={isTranslating}
+          from={from}
           setInitialText={setInitialText}
           setTranslatedText={setTranslatedText}
           setIsTranslating={setIsTranslating}
           handleTranslate={handleTranslate}
+          setFrom={setFrom}
         />
-        <History history={history} handleGetHistory={handleGetHistory} />
+        <History
+          history={history}
+          from={from}
+          handleGetHistory={handleGetHistory}
+          setInitialText={setInitialText}
+          setTranslatedText={setTranslatedText}
+          setFrom={setFrom}
+        />
         <Navbar />
       </View>
     </TouchableWithoutFeedback>

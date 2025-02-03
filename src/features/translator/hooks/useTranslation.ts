@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   HistoryWord,
   storage,
+  TFrom,
   translate,
   TranslateRequestDto,
 } from "@/src/entities/translator";
@@ -13,6 +14,7 @@ export const useTranslation = () => {
   const [translatedText, setTranslatedText] = useState("");
   const [isTranslating, setIsTranslating] = useState(false);
   const [history, setHistory] = useState<HistoryWord[]>([]);
+  const [from, setFrom] = useState<TFrom>("input");
 
   function handleGetHistory() {
     getStorageData(storage.HISTORY).then((data) => {
@@ -69,10 +71,12 @@ export const useTranslation = () => {
     translatedText,
     isTranslating,
     history,
+    from,
     setIsTranslating,
     setInitialText,
     setTranslatedText,
     handleTranslate,
     handleGetHistory,
+    setFrom,
   };
 };

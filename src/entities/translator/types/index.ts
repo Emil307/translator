@@ -12,3 +12,5 @@ export type HistoryWord = {
   initial: string;
   translation: string;
 };
+
+export type TFrom = "input" | "history";

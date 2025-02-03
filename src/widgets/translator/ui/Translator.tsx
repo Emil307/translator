@@ -8,7 +8,11 @@ import {
   useRecording,
 } from "@/src/features/translator";
 import { textToSpeech, useDebounce } from "@/src/shared";
-import { language, TranslateRequestDto } from "@/src/entities/translator";
+import {
+  language,
+  TFrom,
+  TranslateRequestDto,
+} from "@/src/entities/translator";
 import { Translation } from "@/src/features/translator";
 import axios, { CancelTokenSource } from "axios";
 
@@ -16,6 +20,7 @@ interface TranslatorProps {
   initialText: string;
   translatedText: string;
   isTranslating: boolean;
+  from?: TFrom;
   setInitialText: (text: string) => void;
   setTranslatedText: (text: string) => void;
   setIsTranslating: (value: boolean) => void;
@@ -23,16 +28,19 @@ interface TranslatorProps {
     translateRequest: TranslateRequestDto,
     token: CancelTokenSource
   ) => void;
+  setFrom: (from: TFrom) => void;
 }
 
 export const Translator: React.FC<TranslatorProps> = ({
   initialText,
   translatedText,
   isTranslating,
+  from = "input",
   setInitialText,
   setTranslatedText,
   setIsTranslating,
   handleTranslate,
+  setFrom,
 }) => {
   const [initialLanguage, setInitialLanguage] = useState<language>(language.RU);
   const [translationLanguage, setTranslationLanguage] = useState<language>(
@@ -73,18 +81,20 @@ export const Translator: React.FC<TranslatorProps> = ({
       return;
     }
     if (typeof debouncedInitialText === "string") {
-      setIsTranslating(true);
+      if (from === "input") {
+        setIsTranslating(true);
 
-      const source = axios.CancelToken.source();
-      setCancelToken(source);
+        const source = axios.CancelToken.source();
+        setCancelToken(source);
 
-      const translateRequest: TranslateRequestDto = {
-        source_lang: initialLanguage,
-        target_lang: translationLanguage,
-        text: debouncedInitialText,
-      };
+        const translateRequest: TranslateRequestDto = {
+          source_lang: initialLanguage,
+          target_lang: translationLanguage,
+          text: debouncedInitialText,
+        };
 
-      handleTranslate(translateRequest, source);
+        handleTranslate(translateRequest, source);
+      }
 
       handleGetTTS();
     }
@@ -97,6 +107,9 @@ export const Translator: React.FC<TranslatorProps> = ({
   };
 
   function handleInputText(text: string) {
+    if (from !== "input") {
+      setFrom("input");
+    }
     setInitialText(text);
     cancelRequests();
   }
@@ -109,10 +122,12 @@ export const Translator: React.FC<TranslatorProps> = ({
           translationLanguage={translationLanguage}
           textToTranslate={translatedText}
           cancelToken={cancelToken as any}
+          from={from}
           setInitialLanguage={setInitialLanguage}
           setTranslationLanguage={setTranslationLanguage}
           setInitialText={setInitialText}
           handleTranslate={handleTranslate}
+          setFrom={setFrom}
         />
         <View style={styles.wrapper}>
           <View style={styles.initial}>
