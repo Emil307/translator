@@ -2,7 +2,7 @@ import { router, Slot } from "expo-router";
 import { useEffect } from "react";
 
 export function RootLayout() {
-  const isAuth = false;
+  const isAuth = true;
 
   useEffect(() => {
     if (!isAuth) {
