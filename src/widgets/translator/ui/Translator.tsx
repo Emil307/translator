@@ -190,7 +190,17 @@ export const Translator: React.FC<TranslatorProps> = ({
                 </TouchableOpacity>
               )}
               <View>
-                {isLoadingTTS && <Text>loading...</Text>}
+                {isLoadingTTS && (
+                  <LottieView
+                    autoPlay
+                    ref={animation}
+                    style={{
+                      width: 32,
+                      height: 32,
+                    }}
+                    source={require("@/assets/lottie/loader-white.json")}
+                  />
+                )}
                 {!isLoadingTTS && !error && initialText && (
                   <TouchableOpacity onPress={() => playSound(ttsUri)}>
                     <Image
@@ -205,7 +215,25 @@ export const Translator: React.FC<TranslatorProps> = ({
           {translatedText && (
             <Translation translation={translatedText} language={language.EN} />
           )}
-          {isTranslating && <Text>Загрузка...</Text>}
+          {isTranslating && (
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                height: 80,
+              }}
+            >
+              <LottieView
+                autoPlay
+                ref={animation}
+                style={{
+                  width: 40,
+                  height: 40,
+                }}
+                source={require("@/assets/lottie/loader.json")}
+              />
+            </View>
+          )}
         </View>
       </View>
     </View>

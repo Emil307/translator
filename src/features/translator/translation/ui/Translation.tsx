@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Text, TouchableOpacity, View, Image } from "react-native";
 import { styles } from "../styles";
 import { language } from "@/src/entities/translator";
 import { textToSpeech } from "@/src/shared";
 import { usePlayAudio } from "../../hooks";
+import LottieView from "lottie-react-native";
 
 interface TranslationProps {
   translation: string;
@@ -17,6 +18,7 @@ export const Translation: React.FC<TranslationProps> = ({
   const [audioUri, setAudioUri] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const animation = useRef<LottieView>(null);
 
   const { playSound } = usePlayAudio();
 
@@ -48,7 +50,17 @@ export const Translation: React.FC<TranslationProps> = ({
         </Text>
       </View>
       <View>
-        {isLoading && <Text>loading...</Text>}
+        {isLoading && (
+          <LottieView
+            autoPlay
+            ref={animation}
+            style={{
+              width: 32,
+              height: 32,
+            }}
+            source={require("@/assets/lottie/loader-white.json")}
+          />
+        )}
         {!isLoading && !error && (
           <TouchableOpacity onPress={() => playSound(audioUri)}>
             <Image
