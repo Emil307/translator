@@ -1,6 +1,12 @@
 import { useState } from "react";
-import { translate, TranslateRequestDto } from "@/src/entities/translator";
+import {
+  HistoryWord,
+  storage,
+  translate,
+  TranslateRequestDto,
+} from "@/src/entities/translator";
 import axios, { CancelTokenSource } from "axios";
+import { getStorageData, saveStorageData } from "@/src/shared";
 
 export const useTranslation = () => {
   const [initialText, setInitialText] = useState("");
@@ -13,6 +19,23 @@ export const useTranslation = () => {
   ) {
     translate(translateRequest, cancelToken)
       .then((res) => {
+        const newWord = {
+          id: new Date(),
+          initial: res.data.initial,
+          translation: res.data.translation,
+        };
+        getStorageData(storage.HISTORY).then((data) => {
+          if (!data) {
+            saveStorageData(storage.HISTORY, JSON.stringify([newWord]));
+          }
+          if (data) {
+            saveStorageData(
+              storage.HISTORY,
+              JSON.stringify([newWord, ...JSON.parse(data)])
+            );
+          }
+        });
+
         setTranslatedText(res.data.translation);
       })
       .catch((e) => {

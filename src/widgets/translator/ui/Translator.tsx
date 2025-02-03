@@ -2,30 +2,38 @@ import React, { useEffect, useState } from "react";
 import { styles } from "../styles";
 import { View, Image, Text, TextInput, TouchableOpacity } from "react-native";
 import * as Clipboard from "expo-clipboard";
-import {
-  ChangeLanguage,
-  useRecording,
-  useTranslation,
-} from "@/src/features/translator";
+import { ChangeLanguage, useRecording } from "@/src/features/translator";
 import { useDebounce } from "@/src/shared";
 import { language, TranslateRequestDto } from "@/src/entities/translator";
 import { Translation } from "@/src/features/translator";
 import axios, { CancelTokenSource } from "axios";
 
-export const Translator: React.FC = () => {
+interface TranslatorProps {
+  initialText: string;
+  translatedText: string;
+  isTranslating: boolean;
+  setInitialText: (text: string) => void;
+  setTranslatedText: (text: string) => void;
+  setIsTranslating: (value: boolean) => void;
+  handleTranslate: (
+    translateRequest: TranslateRequestDto,
+    token: CancelTokenSource
+  ) => void;
+}
+
+export const Translator: React.FC<TranslatorProps> = ({
+  initialText,
+  translatedText,
+  isTranslating,
+  setInitialText,
+  setTranslatedText,
+  setIsTranslating,
+  handleTranslate,
+}) => {
   const [initialLanguage, setInitialLanguage] = useState<language>(language.RU);
   const [translationLanguage, setTranslationLanguage] = useState<language>(
     language.EN
   );
-  const {
-    initialText,
-    translatedText,
-    isTranslating,
-    setInitialText,
-    setTranslatedText,
-    setIsTranslating,
-    handleTranslate,
-  } = useTranslation();
   const { isRecording, audioUri, startRecording, stopRecording } =
     useRecording();
 

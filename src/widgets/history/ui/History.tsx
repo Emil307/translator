@@ -1,45 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Image, ScrollView } from "react-native";
 import { styles } from "../styles";
-import { WordCard } from "@/src/entities/translator";
-
-const words = [
-  {
-    id: 1,
-    initial: "Вкусный",
-    result: "Tasty",
-  },
-  {
-    id: 2,
-    initial:
-      "Длинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текстДлинный текст",
-    result:
-      "LongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongTextLongText",
-  },
-  {
-    id: 3,
-    initial: "Вкусный",
-    result: "Tasty",
-  },
-  {
-    id: 4,
-    initial: "Вкусный",
-    result: "Tasty",
-  },
-  {
-    id: 5,
-    initial: "Вкусный",
-    result: "Tasty",
-  },
-  {
-    id: 6,
-    initial: "Вкусный",
-    result: "Tasty",
-  },
-];
+import { HistoryWord, storage, WordCard } from "@/src/entities/translator";
+import { getStorageData } from "@/src/shared";
 
 export const History: React.FC = () => {
-  if (words.length === 0) {
+  const [history, setHistory] = useState<HistoryWord[]>([]);
+
+  useEffect(() => {
+    getStorageData(storage.HISTORY).then((data) => {
+      if (data) {
+        setHistory(JSON.parse(data));
+      }
+    });
+  }, []);
+
+  if (history.length === 0 || !history) {
     return null;
   }
 
@@ -58,7 +34,7 @@ export const History: React.FC = () => {
         contentContainerStyle={styles.words}
         keyboardShouldPersistTaps="handled"
       >
-        {words.map((word) => (
+        {history.map((word) => (
           <WordCard word={word} key={word.id} />
         ))}
       </ScrollView>
