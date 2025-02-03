@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  HistoryWord,
   storage,
   translate,
   TranslateRequestDto,
@@ -24,6 +23,7 @@ export const useTranslation = () => {
           initial: res.data.initial,
           translation: res.data.translation,
         };
+
         getStorageData(storage.HISTORY).then((data) => {
           if (!data) {
             saveStorageData(storage.HISTORY, JSON.stringify([newWord]));
