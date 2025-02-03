@@ -9,6 +9,7 @@ interface ChangeLanguageProps {
   setInitialLanguage: (language: language) => void;
   translationLanguage: language;
   setTranslationLanguage: (language: language) => void;
+  setInitialText: (text: string) => void;
   handleTranslate: (
     translateRequest: TranslateRequestDto,
     cancelToken: CancelTokenSource
@@ -24,9 +25,12 @@ export const ChangeLanguage: React.FC<ChangeLanguageProps> = ({
   cancelToken,
   setInitialLanguage,
   setTranslationLanguage,
+  setInitialText,
   handleTranslate,
 }) => {
   function handleChangeLanguage() {
+    setInitialText(textToTranslate);
+
     const initialLanguageCached = initialLanguage;
 
     setInitialLanguage(translationLanguage);

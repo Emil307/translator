@@ -86,6 +86,7 @@ export const Translator: React.FC<TranslatorProps> = ({
           cancelToken={cancelToken as any}
           setInitialLanguage={setInitialLanguage}
           setTranslationLanguage={setTranslationLanguage}
+          setInitialText={setInitialText}
           handleTranslate={handleTranslate}
         />
         <View style={styles.wrapper}>
