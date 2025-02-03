@@ -2,13 +2,13 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
+    height: "100%",
+    justifyContent: "center",
     maxWidth: 120,
-    height: 50,
-    paddingTop: 8,
-    paddingBottom: 8,
     paddingLeft: 12,
     paddingRight: 12,
     borderRadius: 10,
+    marginRight: 8,
     borderWidth: 1,
     borderColor: "rgba(242, 236, 231, .2)",
     borderStyle: "solid",

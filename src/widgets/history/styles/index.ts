@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
+    height: 86,
     gap: 16,
     paddingLeft: 10,
     marginBottom: 20,
@@ -24,7 +25,6 @@ export const styles = StyleSheet.create({
     height: 20,
   },
   words: {
-    flexDirection: "row",
-    gap: 8,
+    height: 50,
   },
 });

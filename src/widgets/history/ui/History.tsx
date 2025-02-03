@@ -56,6 +56,7 @@ export const History: React.FC = () => {
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.words}
+        keyboardShouldPersistTaps="handled"
       >
         {words.map((word) => (
           <WordCard word={word} key={word.id} />
