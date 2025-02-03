@@ -7,7 +7,7 @@ import {
   usePlayAudio,
   useRecording,
 } from "@/src/features/translator";
-import { textToSpeech, useDebounce } from "@/src/shared";
+import { speechToText, textToSpeech, useDebounce } from "@/src/shared";
 import {
   language,
   TFrom,
@@ -55,6 +55,7 @@ export const Translator: React.FC<TranslatorProps> = ({
   );
   const [ttsUri, setTTSUri] = useState("");
   const [isLoadingTTS, setIsLoadingTTS] = useState(false);
+  const [isLoadingSTT, setIsLoadingSTT] = useState(false);
   const [error, setError] = useState(null);
   const animation = useRef<LottieView>(null);
 
@@ -74,6 +75,20 @@ export const Translator: React.FC<TranslatorProps> = ({
       .finally(() => {
         setIsLoadingTTS(false);
       });
+  }
+
+  const cancelRequests = () => {
+    if (cancelToken) {
+      cancelToken.cancel("Операция отменена");
+    }
+  };
+
+  function handleInputText(text: string) {
+    if (from !== "input") {
+      setFrom("input");
+    }
+    setInitialText(text);
+    cancelRequests();
   }
 
   useEffect(() => {
@@ -102,19 +117,21 @@ export const Translator: React.FC<TranslatorProps> = ({
     }
   }, [debouncedInitialText]);
 
-  const cancelRequests = () => {
-    if (cancelToken) {
-      cancelToken.cancel("Операция отменена");
+  useEffect(() => {
+    if (audioUri) {
+      setIsLoadingSTT(true);
+      speechToText({ file: audioUri, lang: initialLanguage })
+        .then((res) => {
+          handleInputText(res.data.text);
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+        .finally(() => {
+          setIsLoadingSTT(false);
+        });
     }
-  };
-
-  function handleInputText(text: string) {
-    if (from !== "input") {
-      setFrom("input");
-    }
-    setInitialText(text);
-    cancelRequests();
-  }
+  }, [audioUri]);
 
   return (
     <View style={styles.screen}>
@@ -165,7 +182,18 @@ export const Translator: React.FC<TranslatorProps> = ({
               )}
             </View>
             <View style={styles.bottom}>
-              {!isRecording && (
+              {isLoadingSTT && (
+                <LottieView
+                  autoPlay
+                  ref={animation}
+                  style={{
+                    width: 32,
+                    height: 32,
+                  }}
+                  source={require("@/assets/lottie/loader-white.json")}
+                />
+              )}
+              {!isRecording && !isLoadingSTT && (
                 <TouchableOpacity onPress={startRecording}>
                   <Image
                     style={styles.recordImage}
@@ -173,7 +201,7 @@ export const Translator: React.FC<TranslatorProps> = ({
                   />
                 </TouchableOpacity>
               )}
-              {isRecording && (
+              {isRecording && !isLoadingSTT && (
                 <TouchableOpacity
                   onPress={stopRecording}
                   style={styles.recordingButton}

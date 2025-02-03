@@ -35,3 +35,12 @@ export interface TTSRequestDTO {
 export interface TTSResponseDTO {
   url: string;
 }
+
+export interface STTRequestDTO {
+  lang: string;
+  file: string;
+}
+
+export interface STTResponseDTO {
+  text: string;
+}
