@@ -23,6 +23,11 @@ export default function TranslatorScreen() {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
+        {/* <TouchableWithoutFeedback
+          onPress={() => removeStorageData(storage.HISTORY)}
+        >
+          <Text>очистить хранилище</Text>
+        </TouchableWithoutFeedback> */}
         <Header />
         <Translator
           initialText={initialText}
