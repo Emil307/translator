@@ -1,7 +1,11 @@
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, TouchableOpacity, View, Image } from "react-native";
 import { styles } from "../styles";
 import { language } from "@/src/entities/translator";
+import { textToSpeech } from "@/src/shared";
+import { Audio } from "expo-av";
+import { API_URL } from "@env";
+import { Sound } from "expo-av/build/Audio";
 
 interface TranslationProps {
   translation: string;
@@ -12,6 +16,37 @@ export const Translation: React.FC<TranslationProps> = ({
   translation,
   language,
 }) => {
+  const [audioUri, setAudioUri] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [sounds, setSounds] = useState<Sound[]>([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    textToSpeech({ text: translation, lang: language })
+      .then((res) => {
+        setAudioUri(res.data.url);
+      })
+      .catch((e) => {
+        setError(e);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [translation]);
+
+  const playSound = async () => {
+    await Promise.all(sounds.map((sound) => sound.stopAsync()));
+    setSounds([]);
+
+    const { sound } = await Audio.Sound.createAsync(
+      { uri: `${API_URL}${audioUri}` },
+      { shouldPlay: true }
+    );
+
+    setSounds((prevSounds) => [...prevSounds, sound]);
+  };
+
   return (
     <View style={styles.container}>
       <View>
@@ -25,14 +60,17 @@ export const Translation: React.FC<TranslationProps> = ({
           {translation}
         </Text>
       </View>
-      {/* <View>
-        <TouchableOpacity onPress={() => speakText(translation, language)}>
-          <Image
-            source={require("@/assets/images/play-sound.png")}
-            style={styles.play}
-          />
-        </TouchableOpacity>
-      </View> */}
+      <View>
+        {isLoading && <Text>loading...</Text>}
+        {!isLoading && !error && (
+          <TouchableOpacity onPress={playSound}>
+            <Image
+              source={require("@/assets/images/play-sound.png")}
+              style={styles.play}
+            />
+          </TouchableOpacity>
+        )}
+      </View>
     </View>
   );
 };
