@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { View, Text, Image, ScrollView } from "react-native";
 import { styles } from "../styles";
-import { HistoryWord, storage, WordCard } from "@/src/entities/translator";
-import { getStorageData } from "@/src/shared";
+import { HistoryWord, WordCard } from "@/src/entities/translator";
 
-export const History: React.FC = () => {
-  const [history, setHistory] = useState<HistoryWord[]>([]);
+interface HistoryProps {
+  history: HistoryWord[];
+  handleGetHistory: () => void;
+}
 
+export const History: React.FC<HistoryProps> = ({
+  history,
+  handleGetHistory,
+}) => {
   useEffect(() => {
-    getStorageData(storage.HISTORY).then((data) => {
-      if (data) {
-        setHistory(JSON.parse(data));
-      }
-    });
+    handleGetHistory();
   }, []);
 
-  if (history.length === 0 || !history) {
+  if (history.length === 0) {
     return null;
   }
 

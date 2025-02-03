@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  HistoryWord,
   storage,
   translate,
   TranslateRequestDto,
@@ -11,6 +12,15 @@ export const useTranslation = () => {
   const [initialText, setInitialText] = useState("");
   const [translatedText, setTranslatedText] = useState("");
   const [isTranslating, setIsTranslating] = useState(false);
+  const [history, setHistory] = useState<HistoryWord[]>([]);
+
+  function handleGetHistory() {
+    getStorageData(storage.HISTORY).then((data) => {
+      if (data) {
+        setHistory(JSON.parse(data));
+      }
+    });
+  }
 
   function handleTranslate(
     translateRequest: TranslateRequestDto,
@@ -18,25 +28,29 @@ export const useTranslation = () => {
   ) {
     translate(translateRequest, cancelToken)
       .then((res) => {
+        setTranslatedText(res.data.translation);
+
         const newWord = {
           id: new Date(),
           initial: res.data.initial,
           translation: res.data.translation,
         };
 
-        getStorageData(storage.HISTORY).then((data) => {
-          if (!data) {
-            saveStorageData(storage.HISTORY, JSON.stringify([newWord]));
-            return;
-          }
+        getStorageData(storage.HISTORY)
+          .then((data) => {
+            if (!data) {
+              saveStorageData(storage.HISTORY, JSON.stringify([newWord]));
+              return;
+            }
 
-          saveStorageData(
-            storage.HISTORY,
-            JSON.stringify([newWord, ...JSON.parse(data)])
-          );
-        });
-
-        setTranslatedText(res.data.translation);
+            saveStorageData(
+              storage.HISTORY,
+              JSON.stringify([newWord, ...JSON.parse(data)])
+            );
+          })
+          .finally(() => {
+            handleGetHistory();
+          });
       })
       .catch((e) => {
         if (axios.isCancel(e)) {
@@ -54,9 +68,11 @@ export const useTranslation = () => {
     initialText,
     translatedText,
     isTranslating,
+    history,
     setIsTranslating,
     setInitialText,
     setTranslatedText,
     handleTranslate,
+    handleGetHistory,
   };
 };
