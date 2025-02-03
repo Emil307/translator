@@ -3,9 +3,7 @@ import { Text, TouchableOpacity, View, Image } from "react-native";
 import { styles } from "../styles";
 import { language } from "@/src/entities/translator";
 import { textToSpeech } from "@/src/shared";
-import { Audio } from "expo-av";
-import { API_URL } from "@env";
-import { Sound } from "expo-av/build/Audio";
+import { usePlayAudio } from "../../hooks";
 
 interface TranslationProps {
   translation: string;
@@ -19,7 +17,8 @@ export const Translation: React.FC<TranslationProps> = ({
   const [audioUri, setAudioUri] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [sounds, setSounds] = useState<Sound[]>([]);
+
+  const { playSound } = usePlayAudio();
 
   useEffect(() => {
     setIsLoading(true);
@@ -34,21 +33,6 @@ export const Translation: React.FC<TranslationProps> = ({
         setIsLoading(false);
       });
   }, [translation]);
-
-  const playSound = async () => {
-    if (sounds.length > 0) {
-      await Promise.all(sounds.map((sound) => sound.stopAsync()));
-      setSounds([]);
-      return;
-    }
-
-    const { sound } = await Audio.Sound.createAsync(
-      { uri: `${API_URL}${audioUri}` },
-      { shouldPlay: true }
-    );
-
-    setSounds((prevSounds) => [...prevSounds, sound]);
-  };
 
   return (
     <View style={styles.container}>
@@ -66,7 +50,7 @@ export const Translation: React.FC<TranslationProps> = ({
       <View>
         {isLoading && <Text>loading...</Text>}
         {!isLoading && !error && (
-          <TouchableOpacity onPress={playSound}>
+          <TouchableOpacity onPress={() => playSound(audioUri)}>
             <Image
               source={require("@/assets/images/play-sound.png")}
               style={styles.play}
