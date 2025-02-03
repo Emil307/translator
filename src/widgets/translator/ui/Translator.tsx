@@ -154,7 +154,7 @@ export const Translator: React.FC<TranslatorProps> = ({
               )}
               <View>
                 {isLoadingTTS && <Text>loading...</Text>}
-                {!isLoadingTTS && !error && (
+                {!isLoadingTTS && !error && initialText && (
                   <TouchableOpacity onPress={() => playSound(ttsUri)}>
                     <Image
                       source={require("@/assets/images/play-sound.png")}
