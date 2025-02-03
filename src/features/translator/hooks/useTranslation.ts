@@ -27,13 +27,13 @@ export const useTranslation = () => {
         getStorageData(storage.HISTORY).then((data) => {
           if (!data) {
             saveStorageData(storage.HISTORY, JSON.stringify([newWord]));
+            return;
           }
-          if (data) {
-            saveStorageData(
-              storage.HISTORY,
-              JSON.stringify([newWord, ...JSON.parse(data)])
-            );
-          }
+
+          saveStorageData(
+            storage.HISTORY,
+            JSON.stringify([newWord, ...JSON.parse(data)])
+          );
         });
 
         setTranslatedText(res.data.translation);
