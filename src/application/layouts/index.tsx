@@ -9,6 +9,8 @@ export function RootLayout() {
       router.push("/auth/signin");
       return;
     }
+
+    router.push("/tabs/translator");
   }, []);
 
   return <Slot />;
