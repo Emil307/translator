@@ -36,8 +36,11 @@ export const Translation: React.FC<TranslationProps> = ({
   }, [translation]);
 
   const playSound = async () => {
-    await Promise.all(sounds.map((sound) => sound.stopAsync()));
-    setSounds([]);
+    if (sounds.length > 0) {
+      await Promise.all(sounds.map((sound) => sound.stopAsync()));
+      setSounds([]);
+      return;
+    }
 
     const { sound } = await Audio.Sound.createAsync(
       { uri: `${API_URL}${audioUri}` },
