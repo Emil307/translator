@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { styles } from "../styles";
 import { View, Image, Text, TextInput, TouchableOpacity } from "react-native";
 import * as Clipboard from "expo-clipboard";
@@ -15,6 +15,7 @@ import {
 } from "@/src/entities/translator";
 import { Translation } from "@/src/features/translator";
 import axios, { CancelTokenSource } from "axios";
+import LottieView from "lottie-react-native";
 
 interface TranslatorProps {
   initialText: string;
@@ -55,6 +56,7 @@ export const Translator: React.FC<TranslatorProps> = ({
   const [ttsUri, setTTSUri] = useState("");
   const [isLoadingTTS, setIsLoadingTTS] = useState(false);
   const [error, setError] = useState(null);
+  const animation = useRef<LottieView>(null);
 
   const { playSound } = usePlayAudio();
 
@@ -143,14 +145,24 @@ export const Translator: React.FC<TranslatorProps> = ({
                 defaultValue={initialText}
                 onChangeText={(text) => handleInputText(text)}
               />
-              <TouchableOpacity
-                onPress={() => Clipboard.setStringAsync(initialText)}
-              >
-                <Image
-                  style={styles.copyImage}
-                  source={require("@/assets/images/copy.png")}
-                />
-              </TouchableOpacity>
+              {!initialText && (
+                <TouchableOpacity
+                  onPress={() => Clipboard.setStringAsync(initialText)}
+                >
+                  <Image
+                    style={styles.copyImage}
+                    source={require("@/assets/images/copy.png")}
+                  />
+                </TouchableOpacity>
+              )}
+              {initialText && (
+                <TouchableOpacity onPress={() => setInitialText("")}>
+                  <Image
+                    style={styles.copyImage}
+                    source={require("@/assets/images/close.png")}
+                  />
+                </TouchableOpacity>
+              )}
             </View>
             <View style={styles.bottom}>
               {!isRecording && (
@@ -165,7 +177,17 @@ export const Translator: React.FC<TranslatorProps> = ({
                 <TouchableOpacity
                   onPress={stopRecording}
                   style={styles.recordingButton}
-                ></TouchableOpacity>
+                >
+                  <LottieView
+                    autoPlay
+                    ref={animation}
+                    style={{
+                      width: 38,
+                      height: 38,
+                    }}
+                    source={require("@/assets/lottie/recording.json")}
+                  />
+                </TouchableOpacity>
               )}
               <View>
                 {isLoadingTTS && <Text>loading...</Text>}
