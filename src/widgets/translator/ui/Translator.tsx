@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import { styles } from "../styles";
 import { View, Image, Text, TextInput, TouchableOpacity } from "react-native";
 import * as Clipboard from "expo-clipboard";
-import { ChangeLanguage, useRecording } from "@/src/features/translator";
-import { useDebounce } from "@/src/shared";
+import {
+  ChangeLanguage,
+  usePlayAudio,
+  useRecording,
+} from "@/src/features/translator";
+import { textToSpeech, useDebounce } from "@/src/shared";
 import { language, TranslateRequestDto } from "@/src/entities/translator";
 import { Translation } from "@/src/features/translator";
 import axios, { CancelTokenSource } from "axios";
@@ -40,8 +44,27 @@ export const Translator: React.FC<TranslatorProps> = ({
   const [cancelToken, setCancelToken] = useState<CancelTokenSource | null>(
     null
   );
+  const [ttsUri, setTTSUri] = useState("");
+  const [isLoadingTTS, setIsLoadingTTS] = useState(false);
+  const [error, setError] = useState(null);
+
+  const { playSound } = usePlayAudio();
 
   const debouncedInitialText = useDebounce(initialText, 500);
+
+  function handleGetTTS() {
+    setIsLoadingTTS(true);
+    textToSpeech({ text: initialText, lang: initialLanguage })
+      .then((res) => {
+        setTTSUri(res.data.url);
+      })
+      .catch((e) => {
+        setError(e);
+      })
+      .finally(() => {
+        setIsLoadingTTS(false);
+      });
+  }
 
   useEffect(() => {
     if (!debouncedInitialText) {
@@ -62,6 +85,8 @@ export const Translator: React.FC<TranslatorProps> = ({
       };
 
       handleTranslate(translateRequest, source);
+
+      handleGetTTS();
     }
   }, [debouncedInitialText]);
 
@@ -127,6 +152,17 @@ export const Translator: React.FC<TranslatorProps> = ({
                   style={styles.recordingButton}
                 ></TouchableOpacity>
               )}
+              <View>
+                {isLoadingTTS && <Text>loading...</Text>}
+                {!isLoadingTTS && !error && (
+                  <TouchableOpacity onPress={() => playSound(ttsUri)}>
+                    <Image
+                      source={require("@/assets/images/play-sound.png")}
+                      style={styles.play}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
           </View>
           {translatedText && (

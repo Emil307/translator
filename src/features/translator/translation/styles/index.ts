@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     color: "#F2ECE7",
   },
   play: {
-    width: 20,
-    height: 20,
+    width: 24,
+    height: 24,
   },
 });

@@ -32,6 +32,7 @@ export const styles = StyleSheet.create({
   bottom: {
     flexDirection: "row-reverse",
     justifyContent: "space-between",
+    alignItems: "center",
   },
   input: {
     flex: 1,
@@ -45,6 +46,10 @@ export const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   copyImage: {
+    width: 24,
+    height: 24,
+  },
+  play: {
     width: 24,
     height: 24,
   },
