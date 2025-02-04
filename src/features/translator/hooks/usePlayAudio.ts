@@ -14,12 +14,16 @@ export const usePlayAudio = () => {
       return;
     }
 
-    const { sound } = await Audio.Sound.createAsync(
-      { uri: `${API_URL}${audioUri}` },
-      { shouldPlay: true }
-    );
+    try {
+      const { sound } = await Audio.Sound.createAsync(
+        { uri: `${API_URL}${audioUri}` },
+        { shouldPlay: true }
+      );
 
-    setSounds((prevSounds) => [...prevSounds, sound]);
+      setSounds((prevSounds) => [...prevSounds, sound]);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return {
