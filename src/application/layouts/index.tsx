@@ -1,5 +1,5 @@
+import React, { useEffect } from "react";
 import { router, Slot } from "expo-router";
-import { useEffect } from "react";
 
 export function RootLayout() {
   const isAuth = true;
