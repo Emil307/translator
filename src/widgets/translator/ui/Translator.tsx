@@ -229,7 +229,7 @@ export const Translator: React.FC<TranslatorProps> = ({
                     source={require("@/assets/lottie/loader-white.json")}
                   />
                 )}
-                {!isLoadingTTS && !error && initialText && (
+                {!isLoadingTTS && ttsUri && initialText && (
                   <TouchableOpacity onPress={() => playSound(ttsUri)}>
                     <Image
                       source={require("@/assets/images/play-sound.png")}

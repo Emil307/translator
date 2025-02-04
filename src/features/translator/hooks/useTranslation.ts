@@ -85,6 +85,7 @@ export const useTranslation = () => {
       })
       .finally(() => {
         setIsTranslating(false);
+        setIsLoadingExamples(false);
       });
   }
 

@@ -6,12 +6,15 @@ import { History } from "@/src/widgets/history";
 import { Header } from "@/src/widgets/header";
 import { Navbar } from "@/src/widgets/navbar";
 import { useTranslation } from "@/src/features/translator";
+import { Examples } from "@/src/widgets/examples";
 
 export default function TranslatorScreen() {
   const {
     initialText,
     translatedText,
     isTranslating,
+    examples,
+    isLoadingExamples,
     history,
     from,
     setInitialText,
@@ -42,6 +45,9 @@ export default function TranslatorScreen() {
           handleTranslate={handleTranslate}
           setFrom={setFrom}
         />
+        {initialText && (
+          <Examples examples={examples} isLoadingExamples={isLoadingExamples} />
+        )}
         <History
           history={history}
           from={from}
