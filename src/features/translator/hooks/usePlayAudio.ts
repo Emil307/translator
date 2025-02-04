@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Audio } from "expo-av";
 import { Sound } from "expo-av/build/Audio";
-import { API_URL } from "@env";
 
 export const usePlayAudio = () => {
   const [sounds, setSounds] = useState<Sound[]>([]);
+
+  const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
   const playSound = async (audioUri: string) => {
     if (sounds.length > 0) {
