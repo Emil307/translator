@@ -1,13 +1,8 @@
-import { language } from "../types";
+import { language, TExample } from "../types";
 
 type TAlternative = {
   words: string[];
   translation: string;
-};
-
-type TExample = {
-  source: string;
-  target: string;
 };
 
 export interface TranslateRequestDto {
@@ -26,6 +21,4 @@ export interface AlternativesResponseDto {
   alternatives: TAlternative[];
 }
 
-export interface ExamplesResponseDto {
-  examples: TExample[];
-}
+export type ExamplesResponseDto = TExample[];

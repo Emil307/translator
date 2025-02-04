@@ -14,3 +14,8 @@ export type HistoryWord = {
 };
 
 export type TFrom = "input" | "history";
+
+export type TExample = {
+  source: string;
+  target: string;
+};
